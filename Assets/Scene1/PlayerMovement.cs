@@ -22,6 +22,6 @@ public class PlayerMovement : MonoBehaviour {
 		float moveVertical = Input.GetAxis ("Vertical");
 
 		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, 1f);
-		this.transform.Translate (moveHorizontal*hspeed*Time.deltaTime,0,vspeed*Time.deltaTime);
+		this.transform.Translate (moveHorizontal*hspeed*Time.deltaTime,0,0);
 	}
 }
