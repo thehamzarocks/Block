@@ -9,14 +9,13 @@ public class ParticleMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		speed = 2f;
+		speed = 0f;
 		impactPosition = -2.5f;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		this.transform.Translate(0,0,-speed*Time.deltaTime);
-		if (this.transform.position.z <= impactPosition) {			
+	void Update () {		
+		if (this.transform.position.z <= GameObject.Find("Player").transform.position.z) {			
 			Destroy (this.gameObject);
 		}
 	}
