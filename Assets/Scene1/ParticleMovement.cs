@@ -15,20 +15,20 @@ public class ParticleMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {		
-		this.gameObject.transform.Translate(new Vector3(0,0,-6f*Time.deltaTime));
-		if (this.transform.position.z <= GameObject.Find("Player").transform.position.z) {			
+		this.gameObject.transform.Translate(new Vector3(0,0,-5f*Time.deltaTime));
+		if (this.transform.position.z <= (GameObject.Find("Player").transform.position.z)) {			
 			Destroy (this.gameObject);
 		}
 	}
 
 	void OnCollisionEnter(Collision collision) {
-		if (collision.gameObject.name == "Player") {			
+		if (collision.gameObject.name == "Player") {
 			LightUp ();
 			Destroy (this.gameObject);	
 		}
 	}
 
-	void LightUp() {
+	void LightUp() {		
 		GameObject lightGameObject = new GameObject("The Light");
 		Light lightComp = lightGameObject.AddComponent<Light>();
 		lightComp.color = Color.yellow;

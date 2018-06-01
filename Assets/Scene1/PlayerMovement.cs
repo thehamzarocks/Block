@@ -12,16 +12,13 @@ public class PlayerMovement : MonoBehaviour {
 	void Start ()
 	{	
 		hspeed = 5f;
-		vspeed = 5f;
-		rb = GetComponent<Rigidbody>();
 	}
 
 	void FixedUpdate ()
 	{
+		// the 0.03f is to prevent the collision optimization and nullify the backward movement due to collisions
 		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis ("Vertical");
+		this.transform.Translate (moveHorizontal*hspeed*Time.deltaTime,0,0.03f*Time.deltaTime);
 
-		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, 1f);
-		this.transform.Translate (moveHorizontal*hspeed*Time.deltaTime,0,0);
 	}
 }

@@ -19,10 +19,18 @@ public class GMScript : MonoBehaviour {
 	float zVelocity;
 	float xVelocity;
 
+	float distance;
+	GameObject DistanceText;
+
 	bool first = true;
 
 	// Use this for initialization
 	void Start () {
+
+		distance = 0;
+		DistanceText = GameObject.Find ("Canvas/Panel/DistanceText");
+
+
 		initialPosition = new Vector3 (0, 0.5f, 20);
 		initialRotation = new Quaternion (0, 0, 0, 0);
 
@@ -38,7 +46,8 @@ public class GMScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		distance += Time.deltaTime * 5;
+		DistanceText.GetComponent<DistanceTextScript> ().setDistanceText (distance);
 	}
 
 	public double GetRandomNumber(double minimum, double maximum)
