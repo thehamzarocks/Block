@@ -8,14 +8,15 @@ public class ParticleMovement : MonoBehaviour {
 	float speed;
 
 	// Use this for initialization
-	void Start () {
-		speed = 0f;
-		impactPosition = -2.5f;
+	void Awake () {
+		speed = 5f;
 	}
 	
 	// Update is called once per frame
-	void Update () {		
-		this.gameObject.transform.Translate(new Vector3(0,0,-5f*Time.deltaTime));
+	void Update () {
+		speed = GameObject.Find ("GM").GetComponent<GMScript> ().getSpeed ();
+		this.gameObject.transform.Translate(new Vector3(0,0,-speed*Time.deltaTime));
+		Debug.Log ("And the speed is " + speed.ToString ());
 		if (this.transform.position.z <= (GameObject.Find("Player").transform.position.z)) {			
 			Destroy (this.gameObject);
 		}
@@ -37,4 +38,11 @@ public class ParticleMovement : MonoBehaviour {
 		lightGameObject.transform.position = new Vector3(this.transform.position.x, 5, this.transform.position.z);
 		Destroy (lightGameObject, 0.3f);
 	}
+
+	public void setSpeed(float s) {
+		speed = s;
+		Debug.Log ("Set the speed to " + speed.ToString());
+	}
+
+
 }
