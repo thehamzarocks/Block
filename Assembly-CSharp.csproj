@@ -51,10 +51,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CoinMovement.cs" />
      <Compile Include="Assets\DistanceTextScript.cs" />
      <Compile Include="Assets\GMScript.cs" />
      <Compile Include="Assets\Scene1\ParticleMovement.cs" />
      <Compile Include="Assets\Scene1\PlayerMovement.cs" />
+     <Compile Include="Assets\WoodMovement.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

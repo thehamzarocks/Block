@@ -9,6 +9,9 @@ public class GMScript : MonoBehaviour {
 	GameObject currentParticle;
 	public GameObject particle;
 
+	public GameObject wood;
+	public GameObject coin;
+
 	Vector3 initialPosition;
 	Quaternion initialRotation;
 
@@ -50,11 +53,9 @@ public class GMScript : MonoBehaviour {
 		xVelocity = 10f;
 
 		Random.InitState ((int)Time.time);
-		StartCoroutine (Generate ());
-
-
-
-
+		StartCoroutine (GenerateParticles ());
+		StartCoroutine (GenerateWood ());
+		StartCoroutine (GenerateCoin ());
 	}
 	
 	// Update is called once per frame
@@ -64,7 +65,7 @@ public class GMScript : MonoBehaviour {
 		UpdateSpeed();
 	}
 
-	public double GetRandomNumber(double minimum, double maximum)
+	public float GetRandomNumber(float minimum, float maximum)
 	{ 
 		
 		return Random.value * (maximum - minimum) + minimum;
@@ -79,10 +80,15 @@ public class GMScript : MonoBehaviour {
 		}
 	}
 
-	IEnumerator Generate() {
+	IEnumerator GenerateParticles() {
 		float xDistance;
 		int dir;
+		if (speed == 0) {
+			speed = 5f;
+		}
+
 		float delay = 5 / speed;
+
 		if (previousPos == -1000) {
 			previousPos = 0;
 			xDistance = 0;
@@ -91,18 +97,22 @@ public class GMScript : MonoBehaviour {
 			xDistance = (float) GetRandomNumber (0, xVelocity * delay);
 			dir = GetDirection ();
 			currentPos = previousPos + dir * xDistance;
-			if (currentPos > 9 || currentPos < -8) {
+			if (currentPos > 9 || currentPos < -9) {
 				dir *= -1;
 			}
 		}
-		currentPos = previousPos + dir * xDistance;
 
+		//padding
+		if (xDistance > 8.5) {
+			xDistance -= 1;
+		}
+		currentPos = previousPos + dir * xDistance;
 
 		currentParticle = Instantiate (particle, new Vector3 (currentPos, 0.5f, 30), initialRotation);
 		//currentParticle.GetComponent<ParticleMovement> ().setSpeed (speed);
 		previousPos = currentPos;
 		yield return new WaitForSeconds (delay);
-		StartCoroutine (Generate ());
+		StartCoroutine (GenerateParticles ());
 	}
 
 	void UpdateSpeed() {
@@ -150,5 +160,19 @@ public class GMScript : MonoBehaviour {
 		SceneManager.LoadScene ("scene1");
 	}
 
+	IEnumerator GenerateWood() {
+		float xpos = GetRandomNumber (0f, 9f);
+		int dir = GetDirection ();
+		yield return new WaitForSeconds (5);
+		Instantiate (wood, new Vector3 (xpos*dir, 1f, 30), Quaternion.identity);
+		StartCoroutine (GenerateWood ());
+	}
 
+	IEnumerator GenerateCoin() {
+		float xpos = GetRandomNumber (0f, 9f);
+		int dir = GetDirection ();
+		yield return new WaitForSeconds (3);
+		Instantiate (coin, new Vector3 (xpos*dir, 0.5f, 30), Quaternion.identity);
+		StartCoroutine (GenerateCoin ());
+	}
 }
