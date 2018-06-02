@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GMScript : MonoBehaviour {
 
@@ -16,20 +17,28 @@ public class GMScript : MonoBehaviour {
 	float previousPos;
 	float currentPos;
 	float delay;
-	float zVelocity;
+
 	float xVelocity;
 
 	float distance;
 	GameObject DistanceText;
 	float speed;
 
+	GameObject GameOverPanel;
+	bool gameOver;
+
 	bool first = true;
 
 	// Use this for initialization
 	void Start () {
 
+		GameOverPanel = GameObject.Find ("Canvas/GameOverPanel");
+		GameOverPanel.SetActive (false);
+		gameOver = false;
+
 		previousPos = -1000;
 
+		speed = 5f;
 		distance = 0;
 		DistanceText = GameObject.Find ("Canvas/Panel/DistanceText");
 
@@ -37,8 +46,8 @@ public class GMScript : MonoBehaviour {
 		initialPosition = new Vector3 (0, 0.5f, 20);
 		initialRotation = new Quaternion (0, 0, 0, 0);
 
-		zVelocity = 6f;
-		xVelocity = 5f;
+
+		xVelocity = 10f;
 
 		Random.InitState ((int)Time.time);
 		StartCoroutine (Generate ());
@@ -73,12 +82,13 @@ public class GMScript : MonoBehaviour {
 	IEnumerator Generate() {
 		float xDistance;
 		int dir;
+		float delay = 5 / speed;
 		if (previousPos == -1000) {
 			previousPos = 0;
 			xDistance = 0;
 			dir = 1;
 		} else {
-			xDistance = (float) GetRandomNumber (0, xVelocity * 1);
+			xDistance = (float) GetRandomNumber (0, xVelocity * delay);
 			dir = GetDirection ();
 			currentPos = previousPos + dir * xDistance;
 			if (currentPos > 9 || currentPos < -8) {
@@ -91,11 +101,16 @@ public class GMScript : MonoBehaviour {
 		currentParticle = Instantiate (particle, new Vector3 (currentPos, 0.5f, 30), initialRotation);
 		//currentParticle.GetComponent<ParticleMovement> ().setSpeed (speed);
 		previousPos = currentPos;
-		yield return new WaitForSeconds (1);
+		yield return new WaitForSeconds (delay);
 		StartCoroutine (Generate ());
 	}
 
 	void UpdateSpeed() {
+		if (gameOver) {
+			speed = 0;
+			return;
+		}
+
 		float distance = DistanceText.GetComponent<DistanceTextScript> ().getDistance ();
 
 		/*if (distance < 50) {
@@ -113,12 +128,26 @@ public class GMScript : MonoBehaviour {
 		}*/
 
 		speed = (distance / 100) + 5;
+		if (distance > 1000) {
+			speed = 15f;
+		}
 
 		DistanceText.GetComponent<DistanceTextScript> ().setSpeed (speed);
 	}
 
 	public float getSpeed() {
 		return speed;
+	}
+
+	public void TriggerGameOver() {
+		GameOverPanel.SetActive (true);
+		gameOver = true;
+		StartCoroutine (Restart ());
+	}
+
+	IEnumerator Restart() {
+		yield return new WaitForSeconds (2);
+		SceneManager.LoadScene ("scene1");
 	}
 
 

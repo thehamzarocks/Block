@@ -16,8 +16,8 @@ public class ParticleMovement : MonoBehaviour {
 	void Update () {
 		speed = GameObject.Find ("GM").GetComponent<GMScript> ().getSpeed ();
 		this.gameObject.transform.Translate(new Vector3(0,0,-speed*Time.deltaTime));
-		Debug.Log ("And the speed is " + speed.ToString ());
 		if (this.transform.position.z <= (GameObject.Find("Player").transform.position.z)) {			
+			GameObject.Find ("GM").GetComponent<GMScript> ().TriggerGameOver ();
 			Destroy (this.gameObject);
 		}
 	}
@@ -41,7 +41,6 @@ public class ParticleMovement : MonoBehaviour {
 
 	public void setSpeed(float s) {
 		speed = s;
-		Debug.Log ("Set the speed to " + speed.ToString());
 	}
 
 

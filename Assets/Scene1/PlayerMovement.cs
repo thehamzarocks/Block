@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Start ()
 	{	
-		hspeed = 5f;
+		hspeed = 10f;
 	}
 
 	void FixedUpdate ()
