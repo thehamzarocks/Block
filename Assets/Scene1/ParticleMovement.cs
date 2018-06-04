@@ -7,14 +7,19 @@ public class ParticleMovement : MonoBehaviour {
 	float impactPosition;
 	float speed;
 
+	GMScript gmScript;
+
 	// Use this for initialization
 	void Awake () {
 		speed = 5f;
+		gmScript = GameObject.Find ("GM").GetComponent<GMScript> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		speed = GameObject.Find ("GM").GetComponent<GMScript> ().getSpeed ();
+		checkWoodAhead ();
+		checkWoodBetween ();
+		speed = gmScript.getSpeed ();
 		this.gameObject.transform.Translate(new Vector3(0,0,-speed*Time.deltaTime));
 		if (this.transform.position.z <= (GameObject.Find("Player").transform.position.z-0.5f)) {			
 			GameObject.Find ("GM").GetComponent<GMScript> ().TriggerGameOver ();
@@ -41,6 +46,37 @@ public class ParticleMovement : MonoBehaviour {
 
 	public void setSpeed(float s) {
 		speed = s;
+	}
+
+	void checkWoodAhead() {
+		RaycastHit hit;
+		if(Physics.Raycast(transform.position, Vector3.back, out hit)) {
+			GameObject[] WoodGameObjects = GameObject.FindGameObjectsWithTag ("Woods");
+			Collider WoodCollider;
+			for(int i=0; i<WoodGameObjects.Length; i++) {
+				WoodCollider = WoodGameObjects [i].GetComponent<Collider> ();
+				if (hit.collider == WoodCollider) {
+					Destroy (this.gameObject);
+				}
+			}		
+		}
+	}
+
+	void checkWoodBetween() {
+		float currentPos = gmScript.getCurrentPos ();
+		float previousPos = gmScript.getPreviousPos ();
+		RaycastHit hit;
+		Debug.DrawRay (transform.position, new Vector3(previousPos-currentPos,0,-5) * 3, Color.yellow);
+		if(Physics.Raycast(transform.position, new Vector3(previousPos-currentPos,0,-5), out hit)) {
+			GameObject[] WoodGameObjects = GameObject.FindGameObjectsWithTag ("Woods");
+			Collider WoodCollider;
+			for(int i=0; i<WoodGameObjects.Length; i++) {
+				WoodCollider = WoodGameObjects [i].GetComponent<Collider> ();
+				if (hit.collider == WoodCollider) {
+					Destroy (this.gameObject);
+				}
+			}		
+		}
 	}
 
 

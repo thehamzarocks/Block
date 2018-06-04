@@ -98,6 +98,7 @@
 -define:UNITY_EDITOR_WIN
 -define:ENABLE_NATIVE_ARRAY_CHECKS
 -define:UNITY_TEAM_LICENSE
+Assets/CoinMovement.cs
 Assets/DistanceTextScript.cs
 Assets/GMScript.cs
 Assets/Scene1/ParticleMovement.cs

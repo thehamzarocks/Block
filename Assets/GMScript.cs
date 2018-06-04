@@ -55,7 +55,7 @@ public class GMScript : MonoBehaviour {
 		Random.InitState ((int)Time.time);
 		StartCoroutine (GenerateParticles ());
 		StartCoroutine (GenerateWood ());
-		StartCoroutine (GenerateCoin ());
+		//StartCoroutine (GenerateCoin ());
 	}
 	
 	// Update is called once per frame
@@ -108,10 +108,10 @@ public class GMScript : MonoBehaviour {
 		}
 		currentPos = previousPos + dir * xDistance;
 
-		currentParticle = Instantiate (particle, new Vector3 (currentPos, 0.5f, 30), initialRotation);
+		currentParticle = Instantiate (particle, new Vector3 (currentPos, 0.5f, 30), Quaternion.identity);
 		//currentParticle.GetComponent<ParticleMovement> ().setSpeed (speed);
-		previousPos = currentPos;
 		yield return new WaitForSeconds (delay);
+		previousPos = currentPos;
 		StartCoroutine (GenerateParticles ());
 	}
 
@@ -164,7 +164,7 @@ public class GMScript : MonoBehaviour {
 		float xpos = GetRandomNumber (0f, 9f);
 		int dir = GetDirection ();
 		yield return new WaitForSeconds (5);
-		Instantiate (wood, new Vector3 (xpos*dir, 1f, 30), Quaternion.identity);
+		Instantiate (wood, new Vector3 (xpos*dir, 0.5f, 30), Quaternion.identity);
 		StartCoroutine (GenerateWood ());
 	}
 
@@ -175,4 +175,13 @@ public class GMScript : MonoBehaviour {
 		Instantiate (coin, new Vector3 (xpos*dir, 0.5f, 30), Quaternion.identity);
 		StartCoroutine (GenerateCoin ());
 	}
+
+	public float getCurrentPos() {
+		return currentPos;
+	}
+
+	public float getPreviousPos() {
+		return previousPos;
+	}
+
 }

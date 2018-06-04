@@ -1,11 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scene1\ParticleMovement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CoinMovement.cs">
     <Files>
-      <File FileName="Assets\GMScript.cs" Line="89" Column="97" />
+      <File FileName="Assets\GMScript.cs" Line="107" Column="19" />
       <File FileName="Assets\Scene1\PlayerMovement.cs" Line="21" Column="90" />
-      <File FileName="Assets\Scene1\ParticleMovement.cs" Line="41" Column="2" />
-      <File FileName="Assets\DistanceTextScript.cs" Line="21" Column="71" />
+      <File FileName="Assets\Scene1\ParticleMovement.cs" Line="32" Column="20" />
+      <File FileName="Assets\DistanceTextScript.cs" Line="35" Column="38" />
+      <File FileName="Assets\WoodMovement.cs" Line="14" Column="42" />
+      <File FileName="Assets\CoinMovement.cs" Line="35" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
